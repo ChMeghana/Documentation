@@ -7,19 +7,54 @@ This architecture employs Clean Architecture, an industry-standard design patter
 ```
 ##Architecture Structure
 my_app/
-├── assets/                    # Static assets (images, icons, fonts)
+├── android/                    # Android-specific files
+├── ios/                        # iOS-specific files
+├── assets/                     # Static assets (images, icons, fonts)
 │   ├── bottom_nav_bar_icons/
 │   ├── icons/
 │   └── images/
-├── lib/
-│   ├── src/
-│   │   ├── core/            # Shared infrastructure and utilities
-│   │   ├── domain/          # Business logic and core definitions
-│   │   ├── data/            # Data layer for external interactions
-│   │   ├── presentation/    # User interface and state management
-│   │   ├── const/           # Constants like colors and styles
-│   │   ├── enums/           # Enumerations
-│   │   └── main.dart        # Application entry point
+├── lib/                        # Main application code
+│   ├── core/                   # Shared infrastructure and utilities
+│   │   ├── config/             # Configuration files
+│   │   ├── network/            # API communication
+│   │   ├── di/                 # Dependency injection
+│   │   ├── utils/              # Utility functions
+│   │   ├── local_storage/      # Local database and caching
+│   │   ├── error/              # Error handling
+│   ├── domain/                 # Business logic and core definitions
+│   │   ├── entities/           # Business entities
+│   │   ├── usecases/           # Application-specific business rules
+│   │   ├── repositories/       # Abstract repositories
+│   ├── data/                   # Data layer for external interactions
+│   │   ├── models/             # Data models for API and storage
+│   │   ├── datasources/        # API and database data sources
+│   │   ├── repositories/       # Repository implementations
+│   ├── presentation/           # User interface and state management
+│   │   ├── features/           # Feature-specific UI components
+│   │   ├── navigation/         # Routing and navigation
+│   │   ├── widgets/            # Shared UI components
+│   ├── theme/                  # Global theme and styles
+│   ├── main.dart               # Application entry point
+│   ├── app.dart                # Main app widget
+│   ├── routes.dart             # Application navigation routes
+├── test/                       # Unit and widget tests
+│   ├── features/               # Feature-specific tests
+│   ├── integration/            # Integration tests
+│   ├── unit/                   # Unit tests
+├── build/                      # Output of the build process
+├── web/                        # Web-specific files
+├── macos/                      # macOS-specific files
+├── windows/                    # Windows-specific files
+├── linux/                      # Linux-specific files
+├── pubspec.yaml                # Project dependencies
+├── pubspec.lock                # Locked dependencies
+├── README.md                   # Project documentation
+├── .gitignore                  # Git ignore rules
+├── .metadata                   # Flutter metadata
+├── .packages                   # Package configurations
+├── analysis_options.yaml       # Linter rules
+├── flutter_launcher_icons.yaml # Launcher icons configuration
+└── l10n/                       # Localization files
 ```
 
 ## Example Architecture
@@ -27,81 +62,79 @@ Below is the project structure implementing Simplified Clean Architecture with F
 
 ```
 my_app/
-├── assets/                    # Static assets (images, icons)
-│   ├── bottom_nav_bar_icons/
+my_healthcare_app/
+├── android/
+├── ios/
+├── assets/
 │   ├── icons/
-│   └── images/
+│   ├── images/
+│   └── fonts/
 ├── lib/
-│   ├── src/
-│   │   ├── core/            # Shared utilities and infrastructure
-│   │   │   ├── config/      # Application configuration
-│   │   │   │   └── app_config.dart
-│   │   │   ├── network/     # API client and connectivity
-│   │   │   │   ├── api_client.dart
-│   │   │   │   ├── api_exception.dart
-│   │   │   │   └── network_info.dart
-│   │   │   ├── di/          # Dependency injection
-│   │   │   │   └── injection.dart
-│   │   │   ├── utils/       # Helper functions
-│   │   │   │   └── logger.dart
-│   │   │   └── local/       # Local storage
-│   │   │       └── local_storage.dart
-│   │   ├── domain/          # Business logic
-│   │   │   ├── entities/    # Core business objects
-│   │   │   │   ├── user.dart
-│   │   │   │   ├── patient.dart
-│   │   │   │   └── doctor.dart
-│   │   │   ├── services/    # Business logic and data access
-│   │   │   │   ├── auth_service.dart
-│   │   │   │   ├── patient_service.dart
-│   │   │   │   └── doctor_service.dart
-│   │   │   └── models/      # Data models for API responses
-│   │   │       ├── user_model.dart
-│   │   │       ├── patient_model.dart
-│   │   │       └── doctor_model.dart
-│   │   ├── presentation/    # UI and state management
-│   │   │   ├── features/    # Feature-based modules
-│   │   │   │   ├── auth/
-│   │   │   │   │   ├── screens/
-│   │   │   │   │   │   ├── sign_in_screen.dart
-│   │   │   │   │   │   └── sign_up_screen.dart
-│   │   │   │   │   ├── widgets/
-│   │   │   │   │   │   └── auth_button.dart
-│   │   │   │   │   └── providers/
-│   │   │   │   │       └── auth_provider.dart
-│   │   │   │   ├── patient/
-│   │   │   │   │   ├── screens/
-│   │   │   │   │   │   ├── home_screen.dart
-│   │   │   │   │   │   └── profile_screen.dart
-│   │   │   │   │   ├── widgets/
-│   │   │   │   │   │   └── patient_card.dart
-│   │   │   │   │   └── providers/
-│   │   │   │   │       └── patient_provider.dart
-│   │   │   │   ├── doctor/
-│   │   │   │   │   ├── screens/
-│   │   │   │   │   │   ├── dashboard_screen.dart
-│   │   │   │   │   │   └── patient_list_screen.dart
-│   │   │   │   │   ├── widgets/
-│   │   │   │   │   │   └── doctor_list_tile.dart
-│   │   │   │   │   └── providers/
-│   │   │   │   │       └── doctor_provider.dart
-│   │   │   │   └── splash/
-│   │   │   │       ├── screens/
-│   │   │   │       │   └── splash_screen.dart
-│   │   │   │       └── widgets/
-│   │   │   │           └── splash_logo.dart
-│   │   │   ├── navigation/
-│   │   │   │   └── app_router.dart
-│   │   │   └── widgets/
-│   │   │       ├── dialog/
-│   │   │       │   └── custom_dialog.dart
-│   │   │       └── drawer/
-│   │   │           └── app_drawer.dart
-│   │   ├── const/
-│   │   │   └── colors.dart
-│   │   └── enums/
-│   │       └── user_role.dart
-│   └── main.dart
+│   ├── core/
+│   │   ├── config/
+│   │   │   └── app_config.dart
+│   │   ├── network/
+│   │   │   ├── api_client.dart
+│   │   │   ├── api_exception.dart
+│   │   │   └── network_info.dart
+│   │   ├── di/
+│   │   │   └── injection.dart
+│   │   ├── utils/
+│   │   │   └── logger.dart
+│   │   ├── local_storage/
+│   │   │   └── local_storage.dart
+│   │   ├── error/
+│   │       └── error_handler.dart
+│   ├── domain/
+│   │   ├── entities/
+│   │   │   ├── user.dart
+│   │   │   ├── patient.dart
+│   │   │   ├── doctor.dart
+│   │   ├── usecases/
+│   │   │   ├── auth_usecases.dart
+│   │   │   ├── patient_usecases.dart
+│   │   │   ├── doctor_usecases.dart
+│   │   ├── repositories/
+│   │       ├── auth_repository.dart
+│   │       ├── patient_repository.dart
+│   │       ├── doctor_repository.dart
+│   ├── data/
+│   │   ├── models/
+│   │   │   ├── user_model.dart
+│   │   │   ├── patient_model.dart
+│   │   │   ├── doctor_model.dart
+│   │   ├── datasources/
+│   │   │   ├── remote/
+│   │   │   │   ├── remote_auth_datasource.dart
+│   │   │   │   ├── remote_patient_datasource.dart
+│   │   │   │   ├── remote_doctor_datasource.dart
+│   │   │   ├── local/
+│   │   │       ├── local_auth_datasource.dart
+│   │   │       ├── local_patient_datasource.dart
+│   │   │       ├── local_doctor_datasource.dart
+│   │   ├── repositories/
+│   │       ├── auth_repository_impl.dart
+│   │       ├── patient_repository_impl.dart
+│   │       ├── doctor_repository_impl.dart
+│   ├── presentation/
+│   │   ├── features/
+│   │   │   ├── auth/
+│   │   │   ├── patient/
+│   │   │   ├── doctor/
+│   │   ├── navigation/
+│   │   ├── widgets/
+│   ├── theme/
+│   ├── main.dart
+│   ├── app.dart
+│   ├── routes.dart
+├── test/
+│   ├── features/
+│   ├── integration/
+│   ├── unit/
+├── pubspec.yaml
+├── README.md
+├── .gitignore
+└── analysis_options.yaml
 ```
 
 ---
