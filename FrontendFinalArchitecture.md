@@ -732,6 +732,3 @@ This is the app’s on-switch—starting everything up and showing the first scr
   ```
 - **Use**: Starts the app with the splash screen.
 
----
-
-This updated document includes detailed `domain/`, `data/`, and `presentation/` layers within `common/` and `features/`, providing a complete Clean Architecture with Riverpod for your DaxP app. Let me know if you need further refinements or a Word-specific version!
